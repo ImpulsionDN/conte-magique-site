@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Conte Magique — Une histoire rien que pour lui</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-deep: #101b33;
+    --navy: #1b2a4a;
+    --navy-soft: #24365c;
+    --parchment: #fff8ec;
+    --gold: #e8b54d;
+    --gold-soft: #f3d38a;
+    --coral: #f2967b;
+    --ink: #2a2a2a;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--parchment);
+    color: var(--ink);
+    font-family: 'Lora', serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    position: relative;
+    min-height: 92vh;
+    background: radial-gradient(ellipse at 50% -10%, var(--navy-soft), var(--navy-deep) 65%);
+    color: var(--parchment);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 24px 80px;
+  }
+
+  .stars {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .star {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: var(--gold-soft);
+    border-radius: 50%;
+    opacity: 0.7;
+    animation: twinkle 4s ease-in-out infinite;
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.15; transform: scale(1); }
+    50% { opacity: 0.95; transform: scale(1.6); }
+  }
+
+  .moon {
+    position: absolute;
+    top: 8%;
+    right: 10%;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, var(--gold-soft), var(--gold) 70%);
+    box-shadow: 0 0 60px 10px rgba(232,181,77,0.35);
+  }
+
+  .eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-soft);
+    margin-bottom: 18px;
+    z-index: 2;
+  }
+
+  h1.title {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 700;
+    font-size: clamp(38px, 6vw, 68px);
+    line-height: 1.05;
+    margin: 0 0 20px;
+    z-index: 2;
+    max-width: 780px;
+  }
+
+  h1.title span {
+    color: var(--gold);
+  }
+
+  .subtitle {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: clamp(17px, 2vw, 21px);
+    color: #d8e0f0;
+    max-width: 560px;
+    margin: 0 0 40px;
+    z-index: 2;
+  }
+
+  .cta-scroll {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    background: var(--gold);
+    color: var(--navy-deep);
+    border: none;
+    padding: 16px 34px;
+    border-radius: 100px;
+    cursor: pointer;
+    z-index: 2;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: 0 10px 30px -8px rgba(232,181,77,0.5);
+  }
+
+  .cta-scroll:hover { transform: translateY(-2px); box-shadow: 0 14px 34px -6px rgba(232,181,77,0.6); }
+  .cta-scroll:focus-visible { outline: 3px solid var(--parchment); outline-offset: 3px; }
+
+  /* ---------- FORM SECTION ---------- */
+  .workshop {
+    max-width: 640px;
+    margin: -60px auto 0;
+    padding: 0 20px 90px;
+    position: relative;
+    z-index: 3;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 30px 60px -25px rgba(16,27,51,0.35);
+    padding: 40px 36px;
+  }
+
+  .card h2 {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 26px;
+    color: var(--navy-deep);
+    margin: 0 0 6px;
+  }
+
+  .card p.helper {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #6b7280;
+    margin: 0 0 28px;
+  }
+
+  label {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--navy);
+    margin-bottom: 6px;
+    margin-top: 20px;
+  }
+  label:first-of-type { margin-top: 0; }
+
+  input, select {
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    padding: 13px 14px;
+    border-radius: 10px;
+    border: 1.5px solid #e3e1d8;
+    background: #fbfaf6;
+    color: var(--ink);
+  }
+
+  input:focus, select:focus, button:focus-visible {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(232,181,77,0.25);
+  }
+
+  .age-row { display: flex; gap: 10px; }
+  .age-row button {
+    flex: 1;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 10px 0;
+    border-radius: 10px;
+    border: 1.5px solid #e3e1d8;
+    background: #fbfaf6;
+    color: var(--navy);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .age-row button.active {
+    background: var(--navy-deep);
+    border-color: var(--navy-deep);
+    color: var(--gold-soft);
+  }
+
+  .submit-btn {
+    width: 100%;
+    margin-top: 30px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    background: var(--navy-deep);
+    color: var(--gold-soft);
+    border: none;
+    padding: 16px;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+  }
+  .submit-btn:hover:not(:disabled) { transform: translateY(-1px); }
+  .submit-btn:disabled { opacity: 0.55; cursor: default; }
+
+  .error-msg {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: #b3432f;
+    margin-top: 14px;
+    display: none;
+  }
+
+  /* ---------- TEASER (book page reveal) ---------- */
+  .teaser {
+    display: none;
+    margin-top: 34px;
+    perspective: 1400px;
+  }
+
+  .page {
+    background: #fffdf7;
+    border: 1px solid #ece7d8;
+    border-radius: 14px;
+    padding: 30px 28px;
+    transform-origin: left center;
+    animation: pageOpen 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @keyframes pageOpen {
+    from { transform: rotateY(-90deg); opacity: 0; }
+    to { transform: rotateY(0deg); opacity: 1; }
+  }
+
+  .page h3 {
+    font-family: 'Fredoka', sans-serif;
+    color: var(--navy-deep);
+    font-size: 21px;
+    margin: 0 0 14px;
+  }
+
+  .page p.teaser-text {
+    font-family: 'Lora', serif;
+    font-size: 16px;
+    line-height: 1.7;
+    color: #3a3a3a;
+    margin: 0 0 8px;
+    white-space: pre-wrap;
+  }
+
+  .page .fade-line {
+    background: linear-gradient(to bottom, transparent, #fffdf7);
+    height: 46px;
+    margin-top: -46px;
+    position: relative;
+  }
+
+  .unlock-box {
+    margin-top: 22px;
+    text-align: center;
+  }
+
+  .unlock-price {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: #8a8577;
+    margin-bottom: 10px;
+  }
+
+  .unlock-btn {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    background: var(--coral);
+    color: #fff;
+    border: none;
+    padding: 16px 30px;
+    border-radius: 100px;
+    cursor: pointer;
+    width: 100%;
+    transition: transform 0.15s ease;
+  }
+  .unlock-btn:hover:not(:disabled) { transform: translateY(-1px); }
+  .unlock-btn:disabled { opacity: 0.6; cursor: default; }
+
+  .spam-note {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: #9a9587;
+    text-align: center;
+    margin-top: 14px;
+    line-height: 1.5;
+  }
+
+  /* ---------- STATUS PAGES (merci / histoire) ---------- */
+  .status-screen {
+    min-height: 100vh;
+    background: var(--navy-deep);
+    color: var(--parchment);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 24px;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .status-card {
+    max-width: 480px;
+  }
+
+  .status-card .icon { font-size: 44px; margin-bottom: 18px; }
+
+  .status-card h1 {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 30px;
+    margin: 0 0 14px;
+    color: var(--gold);
+  }
+
+  .status-card p {
+    font-family: 'Lora', serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #d8e0f0;
+  }
+
+  .status-card a.back-link {
+    display: inline-block;
+    margin-top: 26px;
+    color: var(--gold-soft);
+    text-decoration: underline;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    text-align: center;
+    padding: 30px 20px 40px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: #9a9587;
+  }
+</style>
+</head>
+<body>
+
+<!-- Main ordering experience -->
+<div id="app-main">
+
+  <section class="hero">
+    <div class="moon" aria-hidden="true"></div>
+    <div class="stars" id="stars" aria-hidden="true"></div>
+    <p class="eyebrow">Conte Magique</p>
+    <h1 class="title">Une histoire où <span>votre enfant</span> est le héros</h1>
+    <p class="subtitle">En 30 secondes, une aventure sur-mesure prend vie — avec son prénom, son âge, et le monde qu'il préfère.</p>
+    <button class="cta-scroll" onclick="document.getElementById('workshop-anchor').scrollIntoView({behavior:'smooth'})">
+      Créer son histoire
+    </button>
+  </section>
+
+  <div class="workshop" id="workshop-anchor">
+    <div class="card">
+      <h2>L'atelier des histoires</h2>
+      <p class="helper">Remplissez ces quelques informations, votre histoire commence tout de suite.</p>
+
+      <form id="story-form">
+        <label for="childName">Prénom de l'enfant</label>
+        <input type="text" id="childName" required placeholder="Ex. Léna" />
+
+        <label>Âge</label>
+        <div class="age-row" id="age-row">
+          <button type="button" data-age="2">1-2 ans</button>
+          <button type="button" data-age="4">3-4 ans</button>
+          <button type="button" data-age="6">5-6 ans</button>
+          <button type="button" data-age="8">7-8 ans</button>
+        </div>
+        <input type="hidden" id="age" required />
+
+        <label for="theme">Thème de l'aventure</label>
+        <select id="theme" required>
+          <option value="pirates">Pirates</option>
+          <option value="espace">Espace</option>
+          <option value="dinosaures">Dinosaures</option>
+          <option value="dragons">Dragons</option>
+          <option value="licornes">Licornes</option>
+          <option value="princesse">Princesse</option>
+          <option value="chevalier">Chevalier</option>
+          <option value="royaume magique">Royaume magique</option>
+          <option value="fee">Fée</option>
+          <option value="ferme">Ferme</option>
+          <option value="ocean">Océan</option>
+          <option value="sirene">Sirène</option>
+          <option value="foret enchantee">Forêt enchantée</option>
+          <option value="safari">Safari</option>
+          <option value="anniversaire magique">Anniversaire magique</option>
+          <option value="noel">Noël</option>
+          <option value="doudou magique">Doudou magique</option>
+          <option value="ecole des super-heros">École des super-héros</option>
+          <option value="carnaval">Carnaval</option>
+          <option value="chasse au tresor">Chasse au trésor</option>
+        </select>
+
+        <label for="parentEmail">Votre email (pour recevoir l'histoire)</label>
+        <input type="email" id="parentEmail" required placeholder="vous@email.com" />
+
+        <button type="submit" class="submit-btn" id="submit-btn">Générer l'histoire</button>
+        <p class="error-msg" id="error-msg"></p>
+      </form>
+
+      <div class="teaser" id="teaser">
+        <div class="page">
+          <h3 id="teaser-title"></h3>
+          <p class="teaser-text" id="teaser-text"></p>
+          <div class="fade-line"></div>
+          <div class="unlock-box">
+            <p class="unlock-price">Débloquez l'histoire complète illustrée, en PDF</p>
+            <button class="unlock-btn" id="unlock-btn">Débloquer pour 4,99 €</button>
+            <p class="spam-note">Après paiement, votre histoire arrive par email sous 1 à 2 minutes.<br>Pensez à vérifier vos spams/courriers indésirables si vous ne la voyez pas.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>© Conte Magique — Studio Impulsion</footer>
+</div>
+
+<!-- Post-payment success screen -->
+<div class="status-screen" id="screen-merci" style="display:none;">
+  <div class="status-card">
+    <div class="icon">📖✨</div>
+    <h1>Votre histoire arrive !</h1>
+    <p>Le paiement a bien été reçu. Nous illustrons et assemblons l'histoire complète en ce moment même — vous la recevrez par email d'ici 1 à 2 minutes.</p>
+    <p style="font-size:13px; opacity:0.8;">Pensez à vérifier vos spams/courriers indésirables si vous ne la voyez pas.</p>
+    <a href="/" class="back-link">Créer une autre histoire</a>
+  </div>
+</div>
+
+<!-- Payment cancelled / return screen -->
+<div class="status-screen" id="screen-histoire" style="display:none;">
+  <div class="status-card">
+    <div class="icon">📚</div>
+    <h1>Votre histoire vous attend</h1>
+    <p>Le paiement n'a pas été finalisé. Pas d'inquiétude, votre aventure est toujours prête à être débloquée quand vous le souhaitez.</p>
+    <a href="/" class="back-link">Retourner à l'accueil</a>
+  </div>
+</div>
+
+<script>
+  // ---------- CONFIG ----------
+  const WORKER_URL = "https://conte-magique.dni-business44.workers.dev";
+
+  // ---------- Starfield ----------
+  const starsContainer = document.getElementById('stars');
+  if (starsContainer) {
+    for (let i = 0; i < 60; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      s.style.left = Math.random() * 100 + '%';
+      s.style.top = Math.random() * 100 + '%';
+      s.style.animationDelay = (Math.random() * 4) + 's';
+      starsContainer.appendChild(s);
+    }
+  }
+
+  // ---------- Route handling: /merci or /histoire ----------
+  const path = window.location.pathname;
+  if (path.startsWith('/merci')) {
+    document.getElementById('app-main').style.display = 'none';
+    document.getElementById('screen-merci').style.display = 'flex';
+  } else if (path.startsWith('/histoire')) {
+    document.getElementById('app-main').style.display = 'none';
+    document.getElementById('screen-histoire').style.display = 'flex';
+  }
+
+  // ---------- Age selector ----------
+  const ageRow = document.getElementById('age-row');
+  const ageInput = document.getElementById('age');
+  if (ageRow) {
+    ageRow.addEventListener('click', (e) => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+      [...ageRow.children].forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      ageInput.value = btn.dataset.age;
+    });
+  }
+
+  // ---------- Story generation + checkout flow ----------
+  let currentOrderId = null;
+
+  const form = document.getElementById('story-form');
+  const submitBtn = document.getElementById('submit-btn');
+  const errorMsg = document.getElementById('error-msg');
+  const teaser = document.getElementById('teaser');
+  const unlockBtn = document.getElementById('unlock-btn');
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorMsg.style.display = 'none';
+
+      const childName = document.getElementById('childName').value.trim();
+      const age = Number(ageInput.value);
+      const theme = document.getElementById('theme').value;
+      const parentEmail = document.getElementById('parentEmail').value.trim();
+
+      if (!age) {
+        errorMsg.textContent = "Merci de choisir l'âge de l'enfant.";
+        errorMsg.style.display = 'block';
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Écriture de l'histoire en cours...";
+
+      try {
+        const res = await fetch(`${WORKER_URL}/generate`, {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ childName, age, theme, parentEmail }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Une erreur est survenue.");
+
+        currentOrderId = data.orderId;
+        document.getElementById('teaser-title').textContent = data.title;
+        document.getElementById('teaser-text').textContent = data.teaser;
+        teaser.style.display = 'block';
+        teaser.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+        submitBtn.textContent = "Générer une autre histoire";
+        submitBtn.disabled = false;
+      } catch (err) {
+        errorMsg.textContent = err.message || "Impossible de générer l'histoire pour le moment. Réessayez.";
+        errorMsg.style.display = 'block';
+        submitBtn.textContent = "Générer l'histoire";
+        submitBtn.disabled = false;
+      }
+    });
+  }
+
+  if (unlockBtn) {
+    unlockBtn.addEventListener('click', async () => {
+      if (!currentOrderId) return;
+      unlockBtn.disabled = true;
+      unlockBtn.textContent = "Redirection vers le paiement...";
+
+      try {
+        const res = await fetch(`${WORKER_URL}/checkout`, {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ orderId: currentOrderId }),
+        });
+        const data = await res.json();
+        if (!res.ok || !data.checkoutUrl) throw new Error(data.error || "Paiement indisponible.");
+        window.location.href = data.checkoutUrl;
+      } catch (err) {
+        unlockBtn.disabled = false;
+        unlockBtn.textContent = "Débloquer pour 4,99 €";
+        errorMsg.textContent = err.message;
+        errorMsg.style.display = 'block';
+      }
+    });
+  }
+</script>
+
+</body>
+</html>
