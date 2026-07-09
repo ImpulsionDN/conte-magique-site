@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Conte Magique — Espace famille</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-deep: #101b33;
+    --navy-soft: #24365c;
+    --parchment: #fff8ec;
+    --gold: #e8b54d;
+    --gold-soft: #f3d38a;
+    --coral: #f2967b;
+    --ink: #2a2a2a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: radial-gradient(ellipse at 50% -10%, var(--navy-soft), var(--navy-deep) 65%);
+    color: var(--parchment);
+    font-family: 'Lora', serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .card {
+    background: var(--parchment);
+    color: var(--ink);
+    border-radius: 20px;
+    padding: 36px 32px;
+    max-width: 440px;
+    width: 100%;
+    box-shadow: 0 20px 60px -10px rgba(0,0,0,0.5);
+  }
+  h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    color: var(--navy-deep);
+    margin: 0 0 4px;
+  }
+  .subtitle {
+    font-style: italic;
+    color: var(--coral);
+    margin: 0 0 24px;
+    font-size: 15px;
+  }
+  label {
+    display: block;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy-deep);
+    margin: 16px 0 6px;
+  }
+  input, select {
+    width: 100%;
+    padding: 11px 12px;
+    border-radius: 10px;
+    border: 1.5px solid #ddd;
+    font-family: 'Lora', serif;
+    font-size: 15px;
+    background: #fff;
+  }
+  input:focus, select:focus {
+    outline: none;
+    border-color: var(--gold);
+  }
+  .age-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+  .age-row button {
+    padding: 10px 4px;
+    border-radius: 10px;
+    border: 1.5px solid #ddd;
+    background: #fff;
+    font-family: 'Lora', serif;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .age-row button.active {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--navy-deep);
+    font-weight: 600;
+  }
+  button.submit-btn {
+    width: 100%;
+    margin-top: 24px;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    background: var(--gold);
+    color: var(--navy-deep);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+  }
+  button.submit-btn:disabled { opacity: 0.6; cursor: default; }
+  .msg {
+    margin-top: 16px;
+    font-size: 14px;
+    text-align: center;
+    display: none;
+  }
+  .msg.success { color: #1a7a3c; display: block; }
+  .msg.error { color: #c0392b; display: block; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>Espace famille</h1>
+  <p class="subtitle">Créez une histoire gratuite pour vos petits-enfants</p>
+
+  <form id="admin-form">
+    <label for="adminCode">Code famille</label>
+    <input type="password" id="adminCode" required placeholder="•••••••" />
+
+    <label for="childName">Prénom de l'enfant</label>
+    <input type="text" id="childName" required placeholder="Ex. Léna" />
+
+    <label>Âge</label>
+    <div class="age-row" id="age-row">
+      <button type="button" data-age="2">1-2 ans</button>
+      <button type="button" data-age="4">3-4 ans</button>
+      <button type="button" data-age="6">5-6 ans</button>
+      <button type="button" data-age="8">7-8 ans</button>
+    </div>
+    <input type="hidden" id="age" required />
+
+    <label for="theme">Thème de l'aventure</label>
+    <select id="theme" required>
+      <option value="pirates">Pirates</option>
+      <option value="espace">Espace</option>
+      <option value="dinosaures">Dinosaures</option>
+      <option value="dragons">Dragons</option>
+      <option value="licornes">Licornes</option>
+      <option value="princesse">Princesse</option>
+      <option value="chevalier">Chevalier</option>
+      <option value="royaume magique">Royaume magique</option>
+      <option value="fee">Fée</option>
+      <option value="ferme">Ferme</option>
+      <option value="ocean">Océan</option>
+      <option value="sirene">Sirène</option>
+      <option value="foret enchantee">Forêt enchantée</option>
+      <option value="safari">Safari</option>
+      <option value="anniversaire magique">Anniversaire magique</option>
+      <option value="noel">Noël</option>
+      <option value="doudou magique">Doudou magique</option>
+      <option value="ecole des super-heros">École des super-héros</option>
+      <option value="carnaval">Carnaval</option>
+      <option value="chasse au tresor">Chasse au trésor</option>
+    </select>
+
+    <label for="parentEmail">Votre email (pour recevoir l'histoire)</label>
+    <input type="email" id="parentEmail" required placeholder="vous@email.com" />
+
+    <button type="submit" class="submit-btn" id="submit-btn">Créer l'histoire gratuitement</button>
+    <p class="msg" id="msg"></p>
+  </form>
+</div>
+
+<script>
+  const WORKER_URL = "https://conte-magique.dni-business44.workers.dev";
+
+  const ageRow = document.getElementById('age-row');
+  const ageInput = document.getElementById('age');
+  ageRow.addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    [...ageRow.children].forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    ageInput.value = btn.dataset.age;
+  });
+
+  const form = document.getElementById('admin-form');
+  const submitBtn = document.getElementById('submit-btn');
+  const msg = document.getElementById('msg');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    msg.className = 'msg';
+    msg.textContent = '';
+
+    if (!ageInput.value) {
+      msg.className = 'msg error';
+      msg.textContent = "Merci de choisir l'âge de l'enfant.";
+      return;
+    }
+
+    const adminCode = document.getElementById('adminCode').value;
+    const childName = document.getElementById('childName').value.trim();
+    const age = Number(ageInput.value);
+    const theme = document.getElementById('theme').value;
+    const parentEmail = document.getElementById('parentEmail').value.trim();
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Création de l'histoire en cours...";
+
+    try {
+      const res = await fetch(`${WORKER_URL}/admin/generate`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ adminCode, childName, age, theme, parentEmail }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Une erreur est survenue.");
+
+      msg.className = 'msg success';
+      msg.textContent = "✨ C'est parti ! L'histoire de " + childName + " arrive par email d'ici 1 à 2 minutes.";
+      form.reset();
+      ageInput.value = '';
+      [...ageRow.children].forEach(b => b.classList.remove('active'));
+    } catch (err) {
+      msg.className = 'msg error';
+      msg.textContent = err.message || "Impossible de créer l'histoire. Vérifiez le code famille.";
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Créer l'histoire gratuitement";
+    }
+  });
+</script>
+
+</body>
+</html>
