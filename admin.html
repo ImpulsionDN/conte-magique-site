@@ -212,7 +212,7 @@
         body: JSON.stringify({ adminCode, childName, age, theme, parentEmail }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Une erreur est survenue.");
+      if (!res.ok) throw new Error((data.error || "Une erreur est survenue.") + (data.detail ? " — " + data.detail : ""));
 
       msg.className = 'msg success';
       msg.textContent = "✨ C'est parti ! L'histoire de " + childName + " arrive par email d'ici 1 à 2 minutes.";
